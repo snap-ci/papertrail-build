@@ -26,7 +26,7 @@ pid_dir="/var/run"
 log_file="/var/log/papertrail.log"
 log_level="info"
 
-EXTRAOPTIONS="--debug-log $log_file --debug-level $log_level"
+EXTRAOPTIONS="--debug-log $log_file --debug-level $log_level --tls"
 
 pid_file="$pid_dir/$prog.pid"
 
