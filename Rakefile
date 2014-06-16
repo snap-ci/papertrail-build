@@ -7,7 +7,7 @@ gem_name     = 'remote_syslog'
 package_name = 'papertrail-remote_syslog'
 version      = '1.6.14'
 
-release = ENV['GO_PIPELINE_COUNTER'] || ENV['RELEASE'] || 1
+release = Time.now.utc.strftime('%Y%m%d%H%M%S')
 
 CLEAN.include 'pkg'
 CLEAN.include 'jailed-root'
