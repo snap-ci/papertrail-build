@@ -31,7 +31,11 @@ task :install do
 
     sh(%Q{
       unset RUBYOPT BUNDLE_GEMFILE RUBYLIB BUNDLE_BIN_PATH GEM_HOME GEM_PATH
-      bundle install -j4 --binstubs --path .bundle --shebang $(which ruby)
+      export GEM_HOME=$(pwd)/vendor/bundle/ruby/2.0.0
+      export GEM_PATH=$GEM_HOME
+      export PATH=$GEM_HOME/bin:$PATH
+      gem install bundler -v 1.6.3 --no-ri --no-rdoc
+      bundle install -j4 --binstubs --path vendor --shebang $(which ruby)
     })
   end
 end
