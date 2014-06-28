@@ -22,19 +22,21 @@ task :init do
 end
 
 task :install do
-  sh(%Q{
-       export GEM_HOME=#{fake_gem_home}
-       export GEM_PATH=#{fake_gem_home}
-       unset RUBYOPT
-       gem install #{gem_name} --version #{version} --bindir=#{fake_gem_home}/bin --no-ri --no-rdoc
-  })
+  mkdir_p fake_gem_home
+  cd fake_gem_home do
+    File.open("Gemfile", 'w') do |f|
+      f.puts "source 'http://rubygems.org'"
+      f.puts "gem '#{gem_name}', '#{version}'"
+    end
+
+    sh(%Q{
+      unset RUBYOPT BUNDLE_GEMFILE RUBYLIB BUNDLE_BIN_PATH GEM_HOME GEM_PATH
+      bundle install -j4 --binstubs --path .bundle --shebang $(which ruby)
+    })
+  end
 end
 
 task :build do
-  Dir["#{fake_gem_bin}/*"].each do |f|
-    sh(%Q{sed --in-place "s%require \'rubygems\'%ENV[\'GEM_PATH\']= \'/opt/local/#{package_name}\' + \':\' + ENV[\'GEM_PATH\'].to_s\\nrequire \'rubygems\'%" #{f}})
-  end
-
   require 'erb'
 
   mkdir_p 'jailed-root/etc/init.d'
@@ -62,7 +64,7 @@ task :package do
     f.puts %Q{  host: example.papertrailapp.com}
     f.puts %Q{  port: 12345}
   end
-  sh(%Q{bundle exec fpm -s dir -t rpm --force --package pkg/#{package_name}-#{version}-#{release}.x86_64.rpm --name #{package_name} -a x86_64 --version "#{version}" -C jailed-root --depends 'ruby-1.9.3-p484' --verbose --rpm-user root --rpm-group root --config-files etc/papertrail/logs.yml --maintainer snap-ci@thoughtworks.com --vendor snap-ci@thoughtworks.com --url http://snap-ci.com --description #{Shellwords.escape(description_string)} --iteration #{release} --license 'https://github.com/papertrail/remote_syslog/blob/v#{version}/LICENSE' .})
+  sh(%Q{bundle exec fpm -s dir -t rpm --force --package pkg/#{package_name}-#{version}-#{release}.x86_64.rpm --name #{package_name} -a x86_64 --version "#{version}" -C jailed-root --depends 'ruby-2.0.0-p353' --verbose --rpm-user root --rpm-group root --config-files etc/papertrail/logs.yml --maintainer snap-ci@thoughtworks.com --vendor snap-ci@thoughtworks.com --url http://snap-ci.com --description #{Shellwords.escape(description_string)} --iteration #{release} --license 'https://github.com/papertrail/remote_syslog/blob/v#{version}/LICENSE' .})
 end
 
 desc "build and package #{package_name}-#{version}"
