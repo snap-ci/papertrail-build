@@ -32,6 +32,9 @@ pid_file="$pid_dir/$prog.pid"
 
 PATH=<%= RbConfig::CONFIG['bindir'] %>:/opt/local/papertrail-remote_syslog/bin:/sbin:/bin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:$PATH
 
+export GEM_HOME=/opt/local/papertrail-remote_syslog/vendor/bundle/ruby/2.0.0
+export GEM_PATH=$GEM_HOME
+
 RETVAL=0
 
 is_running(){
