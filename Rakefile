@@ -68,7 +68,7 @@ task :package do
     f.puts %Q{  host: example.papertrailapp.com}
     f.puts %Q{  port: 12345}
   end
-  sh(%Q{bundle exec fpm -s dir -t rpm --force --package pkg/#{package_name}-#{version}-#{release}.x86_64.rpm --name #{package_name} -a x86_64 --version "#{version}" -C jailed-root --depends 'ruby-2.0.0-p353' --verbose --rpm-user root --rpm-group root --config-files etc/papertrail/logs.yml --maintainer snap-ci@thoughtworks.com --vendor snap-ci@thoughtworks.com --url http://snap-ci.com --description #{Shellwords.escape(description_string)} --iteration #{release} --license 'https://github.com/papertrail/remote_syslog/blob/v#{version}/LICENSE' .})
+  sh(%Q{bundle exec fpm -s dir -t rpm --force --package pkg/#{package_name}-#{version}-#{release}.x86_64.rpm --name #{package_name} -a x86_64 --version "#{version}" -C jailed-root --depends 'ruby-2.0.0-p598' --verbose --rpm-user root --rpm-group root --config-files etc/papertrail/logs.yml --maintainer snap-ci@thoughtworks.com --vendor snap-ci@thoughtworks.com --url http://snap-ci.com --description #{Shellwords.escape(description_string)} --iteration #{release} --license 'https://github.com/papertrail/remote_syslog/blob/v#{version}/LICENSE' .})
 end
 
 desc "build and package #{package_name}-#{version}"
