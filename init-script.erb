@@ -2,8 +2,8 @@
 
 ### BEGIN INIT INFO
 # Provides: remote_syslog
-# Required-Start: $remote_fs $syslog
-# Required-Stop: $remote_fs $syslog
+# Required-Start: $network $remote_fs $syslog
+# Required-Stop: $network $remote_fs $syslog
 # Default-Start: 2 3 4 5
 # Default-Stop: 0 1 6
 # Short-Description: Start and Stop
@@ -24,16 +24,12 @@ config="/etc/papertrail/logs.yml"
 pid_dir="/var/run"
 
 log_file="/var/log/papertrail.log"
-log_level="info"
 
-EXTRAOPTIONS="--debug-log $log_file --debug-level $log_level --tls"
+EXTRAOPTIONS="--debug-log-cfg=$log_file --tls"
 
 pid_file="$pid_dir/$prog.pid"
 
-PATH=<%= RbConfig::CONFIG['bindir'] %>:/opt/local/papertrail-remote_syslog/bin:/sbin:/bin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:$PATH
-
-export GEM_HOME=/opt/local/papertrail-remote_syslog/vendor/bundle/ruby/2.0.0
-export GEM_PATH=$GEM_HOME
+PATH=/sbin:/bin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:$PATH
 
 RETVAL=0
 
@@ -45,7 +41,7 @@ start(){
     echo -n $"Starting $prog: "
 
     unset HOME MAIL USER USERNAME
-    $prog -c $config --pid-file $pid_file $EXTRAOPTIONS
+    $prog -c $config --pid-file=$pid_file $EXTRAOPTIONS
     RETVAL=$?
     echo
     return $RETVAL
