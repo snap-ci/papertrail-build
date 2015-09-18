@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'bundler/setup'
 
-package_name = 'remote_syslog2'
+package_name = 'remote-syslog2'
 version      = '0.13'
 
 release = Time.now.utc.strftime('%Y%m%d%H%M%S')
