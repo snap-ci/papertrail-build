@@ -44,7 +44,6 @@ end
 task :package, [:dist] do |t, args|
 
   dist = args[:dist] || 'rpm'
-  puts "building for: #{dist}"
   description_string = %Q{Lightweight daemon to tail one or more log files and transmit UDP syslog messages to a remote syslog host (centralized log aggregation). Generates UDP packets itself instead of depending on a system syslog daemon, so it doesn't affect system-wide logging configuration.}
 
   File.open("jailed-root/etc/papertrail/logs.yml", 'w') do |f|
