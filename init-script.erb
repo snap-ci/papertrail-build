@@ -34,7 +34,7 @@ PATH=/sbin:/bin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:$PATH
 RETVAL=0
 
 is_running(){
-  [ -e $pid_file ]
+  [ -e $pid_file ] && ps -p $(cat $pid_file) > /dev/null
 }
 
 start(){
