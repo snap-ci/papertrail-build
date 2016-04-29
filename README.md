@@ -1,4 +1,4 @@
-This repo contains scripts needed to build rpms for various versions of papertrail (https://github.com/papertrail/remote_syslog)
+This repo contains scripts needed to build rpms for various versions of [papertrail](https://github.com/papertrail/remote_syslog).
 
 # CentOS/RHEL
 
