@@ -4,3 +4,4 @@
 /bin/
 Gemfile.lock
 /jailed-root/
+.tags
