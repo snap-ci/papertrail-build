@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'bundler/setup'
+require 'shellwords'
 
 package_name = 'remote-syslog2'
 version      = '0.17'
